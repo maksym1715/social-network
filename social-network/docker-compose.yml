@@ -6,8 +6,8 @@ services:
     restart: always
     environment:
       POSTGRES_DB: social_network
-      POSTGRES_USER: your_username
-      POSTGRES_PASSWORD: your_password
+      POSTGRES_USER: max
+      POSTGRES_PASSWORD: 1234
     ports:
       - "5432:5432"
     volumes:
