@@ -28,7 +28,7 @@ public class UserService {
         User user = new User(
             request.username(),
             request.email(),
-            request.password(), // позже тут можно вставить хэш
+            request.password(), 
             request.firstName(),
             request.lastName(),
             request.dateOfBirth(),
