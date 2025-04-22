@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   postgres:
     image: postgres:13
@@ -13,5 +14,18 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb_social
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: max
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-social-data:/data/db
+
 volumes:
   postgres-data:
+  mongo-social-data:
