@@ -24,21 +24,44 @@ public class UserService {
             .collect(Collectors.toList());
     }
 
+    // Standard registration via form (username, password и etc.)
     public UserResponse registerUser(UserRequest request) {
         User user = new User(
             request.username(),
             request.email(),
-            request.password(), 
+            request.password(),
             request.firstName(),
             request.lastName(),
             request.dateOfBirth(),
             request.gender(),
             request.phoneNumber(),
             request.bio(),
-            request.profilePictureUrl()
+            request.profilePictureUrl(),
+            null, // provider 
+            null  // providerId 
         );
         User saved = userRepository.save(user);
         return mapToResponse(saved);
+    }
+
+    // OAuth2-
+    public User registerOAuth2User(String email, String firstName, String lastName, String profilePictureUrl, String provider, String providerId) {
+        User user = new User(
+        		email,                  // Use email as username  
+        		email,                  // Email address  
+        		firstName,              // First name  
+        		lastName,               // Last name  
+        		profilePictureUrl,      // Profile picture URL  
+        		provider,               // OAuth2 provider (e.g., Google, Facebook, etc.)  
+        		providerId              // Unique ID of the user from the provider 
+        );
+        return userRepository.save(user);
+    }
+
+    // Handling OAuth2 login (create new user or fetch existing one)
+    public User processOAuthPostLogin(String provider, String providerId, String email, String firstName, String lastName, String profilePictureUrl) {
+        return userRepository.findByProviderAndProviderId(provider, providerId)
+            .orElseGet(() -> registerOAuth2User(email, firstName, lastName, profilePictureUrl, provider, providerId));
     }
 
     private UserResponse mapToResponse(User user) {

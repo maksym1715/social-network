@@ -33,6 +33,9 @@ public class User {
 
     private String profilePictureUrl;
     private LocalDateTime createdAt;
+    
+    private String provider;
+    private String providerId;
 
     @PrePersist
     public void prePersist() {
@@ -43,7 +46,7 @@ public class User {
 
     public User(String username, String email, String password, String firstName, String lastName,
                 LocalDate dateOfBirth, String gender, String phoneNumber, String bio,
-                String profilePictureUrl) {
+                String profilePictureUrl, String provider, String providerId) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -54,7 +57,20 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.bio = bio;
         this.profilePictureUrl = profilePictureUrl;
+        this.provider = provider;
+        this.providerId = providerId;
     }
+    
+    public User(String username, String email, String firstName, String lastName, 
+            String profilePictureUrl, String provider, String providerId) {
+    this.username = username;
+    this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.profilePictureUrl = profilePictureUrl;
+    this.provider = provider;
+    this.providerId = providerId;
+}
 
 	public Long getId() {
 		return id;
@@ -150,5 +166,21 @@ public class User {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getProvider() {
+		return provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
 	}
 }
