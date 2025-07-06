@@ -2,9 +2,17 @@ package project.social_network.posts;
 
 import java.time.LocalDateTime;
 
-public class Comment {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "comments")
+public class Comment {
+	@Id
+    private String id;
+
+    private String postId;
     private String authorId;
+    private String comentedPersonId;
     private String content;
     private LocalDateTime createdAt;
 
@@ -12,7 +20,8 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String authorId, String content, LocalDateTime createdAt) {
+    public Comment(String postId,String authorId, String content, LocalDateTime createdAt) {
+    	this.postId = postId;
         this.authorId = authorId;
         this.content = content;
         this.createdAt = createdAt;
@@ -42,4 +51,12 @@ public class Comment {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+	public String getPostId() {
+		return postId;
+	}
+
+	public void setPostId(String postId) {
+		this.postId = postId;
+	}
 }

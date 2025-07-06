@@ -14,7 +14,7 @@ public class Post {
     private String content;
     private LocalDateTime createdAt;
     private List<String> likes;
-    private List<Comment> comments;
+    
 
     // Constructors
     public Post() {
@@ -25,7 +25,7 @@ public class Post {
         this.content = content;
         this.createdAt = createdAt;
         this.likes = likes;
-        this.comments = comments;
+        
     }
 
     // Getters and Setters
@@ -69,11 +69,5 @@ public class Post {
         this.likes = likes;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+   
 }
