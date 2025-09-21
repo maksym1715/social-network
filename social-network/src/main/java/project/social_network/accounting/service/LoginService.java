@@ -6,7 +6,7 @@ import project.social_network.accounting.entity.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface LoginService {
 
     // CRUD
     List<UserResponse> getAllUsers();

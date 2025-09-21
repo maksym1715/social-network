@@ -4,7 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.social_network.accounting.dto.UserRequest;
 import project.social_network.accounting.dto.UserResponse;
-import project.social_network.accounting.service.UserService;
+import project.social_network.accounting.entity.User;
+import project.social_network.accounting.service.LoginService;
+import project.social_network.surveys.services.UserService;
 
 import java.util.List;
 
@@ -12,30 +14,50 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService; // интерфейс
-    public UserController(UserService userService) { this.userService = userService; }
+    private final LoginService loginService;
+    private final project.social_network.surveys.services.UserService userService;
+
+    // интерфейс
+    public UserController(LoginService loginService, UserService userService) {
+        this.loginService = loginService;
+        this.userService = userService;
+    }
 
     @GetMapping
-    public List<UserResponse> getAllUsers() { return userService.getAllUsers(); }
+    public List<UserResponse> getAllUsers() {
+        return loginService.getAllUsers();
+    }
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest request) {
-        return ResponseEntity.ok(userService.registerUser(request));
+        return ResponseEntity.ok(loginService.registerUser(request));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+        return ResponseEntity.ok(loginService.getUserById(id));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest request) {
-        return ResponseEntity.ok(userService.updateUser(id, request));
+        return ResponseEntity.ok(loginService.updateUser(id, request));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/{id}/{friendId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id, @PathVariable Long friendId) {
+        userService.deleteFriend(id, friendId);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/{id}/friends")
+    public ResponseEntity<List<User>> getListOfFriends(@PathVariable long id) {
+        List<User> friends = userService.getListOfFriends(id);
+        return ResponseEntity.ok(friends);
+    }
+    @PostMapping("/{id}/friends/{friendId}")
+    public ResponseEntity<List<User>> addFriend(
+            @PathVariable long id,
+            @PathVariable long friendId) {
+        List<User> friends = userService.addFriend(id, friendId);
+        return ResponseEntity.ok(friends);
     }
 }

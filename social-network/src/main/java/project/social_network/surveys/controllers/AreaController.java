@@ -2,10 +2,7 @@ package project.social_network.surveys.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.social_network.surveys.entities.Area;
 import project.social_network.surveys.services.AreaService;
 
@@ -26,4 +23,29 @@ public class AreaController {
         Area createdArea = areaService.createArea(ownerId, name, description);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdArea);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Area> deleteArea(@PathVariable Long id) {
+        Area deleted = areaService.deleteArea(id);
+        return ResponseEntity.ok(deleted);
+    }
+
+    @PostMapping("/{areaId}/users/{userId}")
+    public ResponseEntity<Area> addUserToArea(@PathVariable Long areaId, @PathVariable Long userId) {
+        Area area = areaService.addUserToArea(areaId, userId);
+        return ResponseEntity.ok(area);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Area> getAreaById(@PathVariable Long id) {
+        Area area = areaService.getAreaById(id);
+        return ResponseEntity.ok(area);
+    }
+
+    @DeleteMapping("/{areaId}/users/{userId}")
+    public ResponseEntity<Area> removeUserFromArea(@PathVariable Long areaId, @PathVariable Long userId) {
+        Area area = areaService.removeUserFromArea(areaId, userId);
+        return ResponseEntity.ok(area);
+    }
 }
+

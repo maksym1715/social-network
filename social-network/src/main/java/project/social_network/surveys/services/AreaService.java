@@ -28,4 +28,32 @@ public class AreaService {
         area.setDescription(description);
         return areaRepository.save(area);
     }
+
+    public Area deleteArea(Long id) {
+        Area area = areaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Area not found"));
+        areaRepository.delete(area);
+        return area;
+    }
+
+    public Area addUserToArea(Long areaId, Long userId) {
+        Area area = areaRepository.findById(areaId)
+                .orElseThrow(() -> new EntityNotFoundException("Area not found"));
+        area.getMembers().add(userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found")));
+        return areaRepository.save(area);
+    }
+
+    public Area getAreaById(Long id) {
+        return areaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Area not found"));
+    }
+
+    public Area removeUserFromArea(Long areaId, Long userId) {
+        Area area = areaRepository.findById(areaId).orElseThrow(() -> new EntityNotFoundException("Area not found"));
+        area.getMembers().remove(userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found")));
+        return areaRepository.save(area);
+    }
+
 }
+

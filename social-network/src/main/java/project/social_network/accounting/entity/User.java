@@ -39,6 +39,10 @@ public class User {
     private String provider;
     private String providerId;
 
+    public List<User> getFriends() {
+        return friends;
+    }
+
     @ManyToMany
     @JoinTable(
         name = "user_friends",

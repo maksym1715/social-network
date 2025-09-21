@@ -9,7 +9,7 @@ import project.social_network.accounting.dto.UserRequest;
 import project.social_network.accounting.dto.UserResponse;
 import project.social_network.accounting.entity.User;
 import project.social_network.accounting.repository.UserRepository;
-import project.social_network.accounting.service.UserService;
+import project.social_network.accounting.service.LoginService;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements LoginService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

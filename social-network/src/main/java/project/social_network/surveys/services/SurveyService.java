@@ -28,4 +28,10 @@ public class SurveyService {
         survey.setDescription(description);
         return surveyRepository.save(survey);
     }
+    public Survey deleteSurvey(Long id) {
+        Survey survey = surveyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Survey not found"));
+        surveyRepository.delete(survey);
+        return survey;
+    }
 }
