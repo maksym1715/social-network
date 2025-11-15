@@ -7,6 +7,8 @@ import project.social_network.accounting.repository.UserRepository;
 import project.social_network.surveys.entities.Area;
 import project.social_network.surveys.repositories.AreaRepository;
 
+import java.util.List;
+
 @Service
 public class AreaService {
     private final AreaRepository areaRepository;
@@ -36,12 +38,13 @@ public class AreaService {
         return area;
     }
 
-    public Area addUserToArea(Long areaId, Long userId) {
+    public List<User> addUserToArea(Long areaId, Long userId) {
         Area area = areaRepository.findById(areaId)
                 .orElseThrow(() -> new EntityNotFoundException("Area not found"));
         area.getMembers().add(userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found")));
-        return areaRepository.save(area);
+        Area areaAfterSaved = areaRepository.save(area);
+        return areaRepository.save(areaAfterSaved).getMembers();
     }
 
     public Area getAreaById(Long id) {

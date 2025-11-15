@@ -29,6 +29,9 @@ public class SurveyResponse {
     @Column(length = 2000)
     private String comment;
 
+
+
+
     public Long getId() {
         return id;
     }

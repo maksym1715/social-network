@@ -12,6 +12,16 @@ public class Survey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "id=" + id +
+                ", area=" + area +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", responses=" + responses +
+                '}';
+    }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "area_id")

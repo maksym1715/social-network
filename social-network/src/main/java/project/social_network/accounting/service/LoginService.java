@@ -1,11 +1,14 @@
 package project.social_network.accounting.service;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import project.social_network.accounting.dto.UserRequest;
 import project.social_network.accounting.dto.UserResponse;
 import project.social_network.accounting.entity.User;
 
 import java.util.List;
 
+@Service
 public interface LoginService {
 
     // CRUD

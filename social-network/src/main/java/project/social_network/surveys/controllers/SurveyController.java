@@ -3,6 +3,8 @@ package project.social_network.surveys.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.social_network.surveys.dto.SurveyCreateResponse;
+import project.social_network.surveys.dto.SurveyRequest;
 import project.social_network.surveys.entities.Survey;
 import project.social_network.surveys.services.SurveyService;
 
@@ -17,10 +19,8 @@ public class SurveyController {
 
 
     @PostMapping
-    public ResponseEntity<Survey> addSurveyToArea(@RequestParam Long areaId,
-                                                  @RequestParam String title,
-                                                  @RequestParam(required = false) String description) {
-        Survey createdSurvey = surveyService.addSurveyToArea(areaId, title, description);
+    public ResponseEntity<SurveyCreateResponse> addSurveyToArea(@RequestBody SurveyRequest surveyRequest) {
+        SurveyCreateResponse createdSurvey = surveyService.addSurveyToArea(surveyRequest.areaId(), surveyRequest.title(), surveyRequest.description());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSurvey);
     }
 

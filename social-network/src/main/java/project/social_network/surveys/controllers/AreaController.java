@@ -3,8 +3,12 @@ package project.social_network.surveys.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.social_network.accounting.entity.User;
+import project.social_network.surveys.dto.AreaCreateRequest;
 import project.social_network.surveys.entities.Area;
 import project.social_network.surveys.services.AreaService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/areas")
@@ -17,10 +21,8 @@ public class AreaController {
 
 
     @PostMapping
-    public ResponseEntity<Area> createArea(@RequestParam Long ownerId,
-                                           @RequestParam String name,
-                                           @RequestParam(required = false) String description) {
-        Area createdArea = areaService.createArea(ownerId, name, description);
+    public ResponseEntity<Area> createArea(@RequestBody AreaCreateRequest areaCreateRequest) {
+        Area createdArea = areaService.createArea(areaCreateRequest.ownerId(),areaCreateRequest.title(),areaCreateRequest.description());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdArea);
     }
 
@@ -31,8 +33,8 @@ public class AreaController {
     }
 
     @PostMapping("/{areaId}/users/{userId}")
-    public ResponseEntity<Area> addUserToArea(@PathVariable Long areaId, @PathVariable Long userId) {
-        Area area = areaService.addUserToArea(areaId, userId);
+    public ResponseEntity<List<User>> addUserToArea(@PathVariable Long areaId, @PathVariable Long userId) {
+        List<User> area = areaService.addUserToArea(areaId, userId);
         return ResponseEntity.ok(area);
     }
 

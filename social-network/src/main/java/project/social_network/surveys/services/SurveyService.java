@@ -2,6 +2,7 @@ package project.social_network.surveys.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import project.social_network.surveys.dto.SurveyCreateResponse;
 import project.social_network.surveys.entities.Area;
 import project.social_network.surveys.entities.Survey;
 import project.social_network.surveys.repositories.AreaRepository;
@@ -17,7 +18,7 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
         this.areaRepository = areaRepository;
     }
-    public Survey addSurveyToArea(Long areaId, String title, String description) {
+    public SurveyCreateResponse addSurveyToArea(Long areaId, String title, String description) {
         Area area = areaRepository.findById(areaId)
                 .orElseThrow(() -> new EntityNotFoundException("Area not found"));
 
@@ -26,7 +27,8 @@ public class SurveyService {
         survey.setArea(area);
         survey.setTitle(title);
         survey.setDescription(description);
-        return surveyRepository.save(survey);
+        Survey savedSurveys = surveyRepository.save(survey);
+        return new SurveyCreateResponse(savedSurveys.getId(), area.getName(), survey.getId(), survey.getTitle(), survey.getTitle());
     }
     public Survey deleteSurvey(Long id) {
         Survey survey = surveyRepository.findById(id)

@@ -39,9 +39,7 @@ public class User {
     private String provider;
     private String providerId;
 
-    public List<User> getFriends() {
-        return friends;
-    }
+    public List<User> getFriends() {return friends;}
 
     @ManyToMany
     @JoinTable(
@@ -60,7 +58,7 @@ public class User {
 
     public User(String username, String email, String password, String firstName, String lastName,
                 LocalDate dateOfBirth, String gender, String phoneNumber, String bio,
-                String profilePictureUrl, String provider, String providerId) {
+                String profilePictureUrl) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -71,8 +69,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.bio = bio;
         this.profilePictureUrl = profilePictureUrl;
-        this.provider = provider;
-        this.providerId = providerId;
     }
     
     public User(String username, String email, String firstName, String lastName, 
